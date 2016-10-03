@@ -1,0 +1,14 @@
+@()
+
+@main("Welcome to Play") {
+    <script type='text/javascript' src='@routes.Assets.at("javascripts/index.js")'></script>
+
+    <ul id="persons"></ul>
+
+    <form method="POST" action="@routes.Application.addPerson()">
+        name: <input type="text" name="name"/>
+        email: <input type="email" name="email"/>
+        password: <input type="password"/>
+        <button>Add Person</button>
+    </form>
+}
