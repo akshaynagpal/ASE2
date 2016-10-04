@@ -4,9 +4,7 @@ scala:
 env:
   - ACTIVATOR_VERSION=2.5.8
 script:
-  - "cd $TRAVIS_BUILD_DIR/code"
-  - "sbt ++$TRAVIS_SCALA_VERSION test"
-  - "sbt ++$TRAVIS_SCALA_VERSION publish-local"
+  - sbt test
 jdk:
   - oraclejdk8
 services:
