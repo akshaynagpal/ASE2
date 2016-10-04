@@ -1,6 +1,6 @@
 package controllers;
 
-import play.*;
+import models.ExistingPerson;
 import play.mvc.*;
 import play.db.jpa.*;
 import views.html.*;
@@ -20,6 +20,11 @@ public class Application extends Controller {
     public Result index() {
         return ok(index.render());
     }
+    public Result login(){ return ok(login.render());}
+
+    public Result loginFail(){ return ok(loginFail.render());}
+
+    public Result loginSuccess(){ return ok(loginSuccess.render()); }
 
     @Transactional
     public Result addPerson() throws ClassNotFoundException {
@@ -45,5 +50,34 @@ public class Application extends Controller {
     public Result getPersons() {
         List<Person> persons = (List<Person>) JPA.em().createQuery("select p from Person p").getResultList();
         return ok(toJson(persons));
+    }
+    @Transactional
+    public Result loginSubmit(){
+        ExistingPerson existingPerson = formFactory.form(ExistingPerson.class).bindFromRequest().get();
+        String myDriver = "com.mysql.jdbc.Driver";
+        String myURL = "jdbc:mysql://localhost:3306/users";
+        int numRows=0;
+
+        try {
+            Class.forName(myDriver);
+            Connection conn = DriverManager.getConnection(myURL, "root", "1234");
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM user_table WHERE email='"+ existingPerson.email +"' AND password='"+ existingPerson.password +"'");
+            String emailID = rs.getString("email");
+            String pass = rs.getString("password");
+            numRows = rs.getFetchSize();
+            System.out.println(numRows);
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        if(numRows==1){
+            return redirect(routes.Application.loginSuccess());
+        }
+        else{
+            return redirect(routes.Application.loginFail());
+        }
     }
 }

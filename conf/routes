@@ -6,6 +6,11 @@
 GET     /                           controllers.Application.index()
 POST    /person                     controllers.Application.addPerson()
 GET     /persons                    controllers.Application.getPersons
+GET     /login                      controllers.Application.login()
+POST     /loginSubmit               controllers.Application.loginSubmit()
+GET     /loginSuccess               controllers.Application.loginSuccess()
+GET     /loginFail                  controllers.Application.loginFail()
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
