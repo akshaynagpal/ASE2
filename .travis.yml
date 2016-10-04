@@ -9,3 +9,7 @@ jdk:
   - oraclejdk8
 services:
   - mysql
+before_script:
+- mysql -u root -e 'CREATE DATABASE users;'
+- mysql -u root -e "CREATE USER 'root'@'localhost' IDENTIFIED BY 'root';"
+- mysql -u root -e "GRANT ALL ON users.* TO 'root'@'localhost';"
