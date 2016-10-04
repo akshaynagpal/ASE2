@@ -29,6 +29,7 @@ public class Application extends Controller {
     @Transactional
     public Result addPerson() throws ClassNotFoundException {
         Person person = formFactory.form(Person.class).bindFromRequest().get();
+        boolean emailFormatCheckResult = checkEmailFormat(person.email);
 
         String myDriver = "com.mysql.jdbc.Driver";
         String myURL = "jdbc:mysql://localhost:3306/users";
@@ -47,10 +48,10 @@ public class Application extends Controller {
     }
 
     @Transactional(readOnly = true)
-    public Result getPersons() {
-        List<Person> persons = (List<Person>) JPA.em().createQuery("select p from Person p").getResultList();
-        return ok(toJson(persons));
-    }
+//    public Result getPersons() {
+//        List<Person> persons = (List<Person>) JPA.em().createQuery("select p from Person p").getResultList();
+//        return ok(toJson(persons));
+//    }
 
     public boolean checkCredentials(String email, String pwd){
         String myDriver = "com.mysql.jdbc.Driver";
@@ -81,7 +82,7 @@ public class Application extends Controller {
     }
 
     public boolean checkEmailFormat(String email){
-        if(email.indexOf('@')>0 && email.indexOf('.')<(email.length()-1)){
+        if((email.indexOf('@')>0) && (email.indexOf('.')<(email.length()-1)) && (email.indexOf('.')>0)){
             return true;
         }
         else{

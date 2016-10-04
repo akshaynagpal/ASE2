@@ -1,9 +1,12 @@
+import controllers.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import models.ExistingPerson;
+import models.Person;
 import org.junit.*;
 
 import play.mvc.*;
@@ -32,5 +35,13 @@ public class ApplicationTest {
     public void simpleCheck() {
         int a = 1 + 1;
         assertThat(a, equalTo(2));
+    }
+    @Test
+    public void emailFormatCheck(){
+        Application a = new Application();
+        assertEquals(true,a.checkEmailFormat("abcd@xyz.com"));
+        assertEquals(false,a.checkEmailFormat("abcd@xyz"));
+        assertEquals(false,a.checkEmailFormat("@xyz"));
+        assertEquals(false,a.checkEmailFormat("ab@xyz."));
     }
 }
