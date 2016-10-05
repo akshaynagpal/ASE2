@@ -63,9 +63,9 @@ public class Application extends Controller {
             Connection conn = DriverManager.getConnection(myURL, "root", "1234");
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM user_table WHERE email='"+ email +"' AND password='"+ pwd +"'");
-            String emailID = rs.getString("email");
-            String pass = rs.getString("password");
-            numRows = rs.getFetchSize();
+            while(rs.next()){
+                numRows++;
+            }
             System.out.println(numRows);
             conn.close();
         } catch (SQLException e) {
@@ -94,26 +94,8 @@ public class Application extends Controller {
     public Result loginSubmit(){
         ExistingPerson existingPerson = formFactory.form(ExistingPerson.class).bindFromRequest().get();
         boolean credentialsCheckResult = checkCredentials(existingPerson.email,existingPerson.password);
-//        String myDriver = "com.mysql.jdbc.Driver";
-//        String myURL = "jdbc:mysql://localhost:3306/users";
-//        int numRows=0;
-//
-//        try {
-//            Class.forName(myDriver);
-//            Connection conn = DriverManager.getConnection(myURL, "root", "1234");
-//            Statement st = conn.createStatement();
-//            ResultSet rs = st.executeQuery("SELECT * FROM user_table WHERE email='"+ existingPerson.email +"' AND password='"+ existingPerson.password +"'");
-//            String emailID = rs.getString("email");
-//            String pass = rs.getString("password");
-//            numRows = rs.getFetchSize();
-//            System.out.println(numRows);
-//            conn.close();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
-        if(credentialsCheckResult){
+
+        if(credentialsCheckResult == true){
             return redirect(routes.Application.loginSuccess());
         }
         else{
