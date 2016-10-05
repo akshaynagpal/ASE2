@@ -20,11 +20,17 @@ public class Application extends Controller {
     public Result index() {
         return ok(index.render());
     }
-    public Result login(){ return ok(login.render());}
+    public Result login(){
+        return ok(login.render());
+    }
 
-    public Result loginFail(){ return ok(loginFail.render());}
+    public Result loginFail() {
+        return ok(loginFail.render());
+    }
 
-    public Result loginSuccess(){ return ok(loginSuccess.render()); }
+    public Result loginSuccess() {
+        return ok(loginSuccess.render());
+    }
 
     @Transactional
     public Result addPerson() throws ClassNotFoundException {
@@ -37,7 +43,8 @@ public class Application extends Controller {
             Class.forName(myDriver);
             Connection conn = DriverManager.getConnection(myURL, "root", "1234");
             Statement st = conn.createStatement();
-            st.executeUpdate("INSERT INTO user_table (email, name, password)"+"VALUES ('"+person.email+"','"+ person.name+"','"+person.password+"')");
+            st.executeUpdate("INSERT INTO user_table (email, name, password)" +
+                    "VALUES ('" + person.email+"','" + person.name+"','" + person.password + "')");
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -46,14 +53,8 @@ public class Application extends Controller {
         //JPA.em().persist(person);
         return redirect(routes.Application.index());
     }
-
-    @Transactional(readOnly = true)
-//    public Result getPersons() {
-//        List<Person> persons = (List<Person>) JPA.em().createQuery("select p from Person p").getResultList();
-//        return ok(toJson(persons));
-//    }
-
-    public boolean checkCredentials(String email, String pwd){
+    
+    public boolean checkCredentials(String email, String pwd) {
         String myDriver = "com.mysql.jdbc.Driver";
         String myURL = "jdbc:mysql://localhost:3306/users";
         int numRows=0;
@@ -63,7 +64,7 @@ public class Application extends Controller {
             Connection conn = DriverManager.getConnection(myURL, "root", "1234");
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM user_table WHERE email='"+ email +"' AND password='"+ pwd +"'");
-            while(rs.next()){
+            while(rs.next()) {
                 numRows++;
             }
             System.out.println(numRows);
@@ -73,32 +74,29 @@ public class Application extends Controller {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        if(numRows==1){
+        if(numRows == 1){
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
 
-    public boolean checkEmailFormat(String email){
-        if((email.indexOf('@')>0) && (email.indexOf('.')<(email.length()-1)) && (email.indexOf('.')>0)){
+    public boolean checkEmailFormat(String email) {
+        if((email.indexOf('@') > 0 ) && (email.indexOf('.') < (email.length() - 1)) && (email.indexOf('.') > 0 )) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
 
     @Transactional
-    public Result loginSubmit(){
+    public Result loginSubmit() {
         ExistingPerson existingPerson = formFactory.form(ExistingPerson.class).bindFromRequest().get();
         boolean credentialsCheckResult = checkCredentials(existingPerson.email,existingPerson.password);
 
-        if(credentialsCheckResult == true){
+        if(credentialsCheckResult == true) {
             return redirect(routes.Application.loginSuccess());
-        }
-        else{
+        } else {
             return redirect(routes.Application.loginFail());
         }
     }
