@@ -13,7 +13,8 @@ import java.sql.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
-
+import org.junit.runners.MethodSorters;
+import org.junit.FixMethodOrder;
 
 /**
 *
@@ -21,6 +22,7 @@ import static org.junit.Assert.assertThat;
 * If you are interested in mocking a whole application, see the wiki for more details.
 *
 */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ApplicationTest {
     String myDriver;
     String myURL;
@@ -47,11 +49,12 @@ public class ApplicationTest {
     }
 
     @Test
-    public void retrieveCheck() {
+    public void t2RetrieveCheck() {
         myDriver = "com.mysql.jdbc.Driver";
         myURL = "jdbc:mysql://localhost:3306/mydatabase";
         ResultSet rs = null;
         try {
+
             Class.forName(myDriver);
             Connection conn = DriverManager.getConnection(myURL, "root", "");
             Statement st = conn.createStatement();
@@ -78,7 +81,7 @@ public class ApplicationTest {
     }
 
     @Test
-    public void deleteCheck(){
+    public void t3DeleteCheck(){
         ResultSet rs = null;
         try {
             Class.forName(myDriver);
@@ -101,12 +104,7 @@ public class ApplicationTest {
     }
 
     @Test
-    public void simpleCheck() {
-        int a = 1 + 1;
-        assertThat(a, equalTo(2));
-    }
-    @Test
-    public void emailFormatCheck(){
+    public void t1EmailFormatCheck(){
         Application a = new Application();
         assertEquals(true,a.checkEmailFormat("abcd@xyz.com"));
         assertEquals(false,a.checkEmailFormat("abcd@xyz"));
