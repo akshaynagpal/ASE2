@@ -3,5 +3,5 @@
 #Practice with Development Technologies: Homework 2
 
 ##Members:  
-Name: Abhijeet Mehortra / UNI: am4586  
+Name: Abhijeet Mehrotra / UNI: am4586
 Name: Akshay Nagpal / UNI: an2756  

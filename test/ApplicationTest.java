@@ -8,6 +8,8 @@ import play.db.Databases;
 
 import com.google.common.collect.ImmutableMap;
 
+import java.sql.*;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -20,6 +22,9 @@ import static org.junit.Assert.assertThat;
 *
 */
 public class ApplicationTest {
+    String myDriver;
+    String myURL;
+
 
     Database database;
     @Before
@@ -39,6 +44,60 @@ public class ApplicationTest {
     @After
     public void shutdownDatabase(){
         database.shutdown();
+    }
+
+    @Test
+    public void retrieveCheck() {
+        myDriver = "com.mysql.jdbc.Driver";
+        myURL = "jdbc:mysql://localhost:3306/mydatabase";
+        ResultSet rs = null;
+        try {
+            Class.forName(myDriver);
+            Connection conn = DriverManager.getConnection(myURL, "root", "");
+            Statement st = conn.createStatement();
+            st.executeUpdate("CREATE TABLE  user_table ( "
+                    + "email VARCHAR(50) PRIMARY,"
+                    + "name VARCHAR (50),"
+                    + "password VARCHAR(12))"
+            );
+            st.executeUpdate("INSERT INTO user_table (email, name, password)" +
+                    "VALUES (\'ak@gm.com\', \'akshay kumar\',\'W&rY69\')");
+            rs = st.executeQuery("SELECT name FROM user_table WHERE email=\'ak@gm.com\'");
+            System.out.println(rs.toString());
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            assertEquals(rs.getString("name"), "akshay kumar");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void deleteCheck(){
+        ResultSet rs = null;
+        try {
+            Class.forName(myDriver);
+            Connection conn = DriverManager.getConnection(myURL, "root", "");
+            Statement st = conn.createStatement();
+            st.executeUpdate("DELETE FROM user_table WHERE email=\'ak@gm.com\'");
+            rs = st.executeQuery("SELECT name FROM user_table WHERE email=\'ak@gm.com\'");
+            System.out.println(rs.toString());
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            assertEquals(rs.getString("name"), null);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
