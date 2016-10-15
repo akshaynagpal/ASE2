@@ -1,26 +1,16 @@
-import controllers.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import models.ExistingPerson;
-import models.Person;
-import org.junit.*;
+import controllers.Application;
+import play.db.Database;
+import play.db.Databases;
 
-import play.mvc.*;
-import play.test.*;
-import play.data.DynamicForm;
-import play.data.validation.ValidationError;
-import play.data.validation.Constraints.RequiredValidator;
-import play.i18n.Lang;
-import play.libs.F;
-import play.libs.F.*;
+import com.google.common.collect.ImmutableMap;
 
-import static play.test.Helpers.*;
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 
 /**
@@ -30,6 +20,26 @@ import static org.hamcrest.CoreMatchers.*;
 *
 */
 public class ApplicationTest {
+
+    Database database;
+    @Before
+    public void setupDatabase(){
+         database = Databases.inMemory(
+                "mydatabase",
+                ImmutableMap.of(
+                        "MODE", "MYSQL"
+                ),
+                ImmutableMap.of(
+                        "logStatements", true
+                )
+        );
+
+    }
+
+    @After
+    public void shutdownDatabase(){
+        database.shutdown();
+    }
 
     @Test
     public void simpleCheck() {

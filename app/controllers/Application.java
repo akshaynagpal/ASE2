@@ -53,7 +53,7 @@ public class Application extends Controller {
         //JPA.em().persist(person);
         return redirect(routes.Application.index());
     }
-    
+
     public boolean checkCredentials(String email, String pwd) {
         String myDriver = "com.mysql.jdbc.Driver";
         String myURL = "jdbc:mysql://localhost:3306/users";

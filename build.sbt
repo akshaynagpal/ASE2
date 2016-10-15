@@ -13,3 +13,4 @@ libraryDependencies ++= Seq(
   "org.hibernate" % "hibernate-entitymanager" % "4.3.7.Final"
 )
 libraryDependencies += "mysql" % "mysql-connector-java" % "5.0.8"
+libraryDependencies += "com.google.guava" % "guava" % "19.0"
