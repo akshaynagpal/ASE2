@@ -51,18 +51,14 @@ public class ApplicationTest {
     @Test
     public void t2RetrieveCheck() {
         myDriver = "com.mysql.jdbc.Driver";
-        myURL = "jdbc:mysql://localhost:3306/mydatabase";
+        myURL = "jdbc:mysql://localhost/mydatabase";
         ResultSet rs = null;
         try {
 
             Class.forName(myDriver);
             Connection conn = DriverManager.getConnection(myURL, "root", "");
             Statement st = conn.createStatement();
-            st.executeUpdate("CREATE TABLE  user_table ( "
-                    + "email VARCHAR(50) PRIMARY ,"
-                    + "name VARCHAR (50),"
-                    + "password VARCHAR(12))"
-            );
+            st.executeUpdate("CREATE TABLE  user_table (email VARCHAR(50) PRIMARY KEY, name VARCHAR (50), password VARCHAR(12))");
             st.executeUpdate("INSERT INTO user_table (email, name, password)" +
                     "VALUES (\'ak@gm.com\', \'akshay kumar\',\'W&rY69\')");
             rs = st.executeQuery("SELECT name FROM user_table WHERE email=\'ak@gm.com\'");
