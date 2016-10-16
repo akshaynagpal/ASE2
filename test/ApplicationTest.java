@@ -67,6 +67,7 @@ public class ApplicationTest {
             st.executeUpdate("INSERT INTO user_table (email, name, password)" +
                     "VALUES (\'ak@gm.com\', \'akshay kumar\',\'W&rY69\')");
             rs = st.executeQuery("SELECT name FROM user_table WHERE email=\'ak@gm.com\'");
+            rs.next();
             System.out.println(rs.toString());
             conn.close();
         } catch (SQLException e) {
@@ -90,6 +91,7 @@ public class ApplicationTest {
             Statement st = conn.createStatement();
             st.executeUpdate("DELETE FROM user_table WHERE email=\'ak@gm.com\'");
             rs = st.executeQuery("SELECT name FROM user_table WHERE email=\'ak@gm.com\'");
+            rs.next();
             System.out.println(rs.toString());
             conn.close();
         } catch (SQLException e) {
