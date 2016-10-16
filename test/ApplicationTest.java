@@ -26,6 +26,7 @@ import org.junit.FixMethodOrder;
 public class ApplicationTest {
     String myDriver;
     String myURL;
+    String name1,name2;
 
 //
 //    Database database;
@@ -62,7 +63,8 @@ public class ApplicationTest {
             st.executeUpdate("INSERT INTO user_table (email, name, password)" +
                     "VALUES (\'ak@gm.com\', \'akshay kumar\',\'W&rY69\')");
             rs = st.executeQuery("SELECT name FROM user_table WHERE email=\'ak@gm.com\'");
-            if(rs.next()) {
+            while(rs.next()) {
+                name1 = rs.getString("name");
                 System.out.println(rs.toString());
             }
             conn.close();
@@ -71,11 +73,7 @@ public class ApplicationTest {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        try {
-            assertEquals(rs.getString("name"), "akshay kumar");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        assertEquals("akshay kumar", name1);
     }
 
     @Test
@@ -87,7 +85,8 @@ public class ApplicationTest {
             Statement st = conn.createStatement();
             st.executeUpdate("DELETE FROM user_table WHERE email=\'ak@gm.com\'");
             rs = st.executeQuery("SELECT name FROM user_table WHERE email=\'ak@gm.com\'");
-            if(rs.next()) {
+            while(rs.next()) {
+                name2 = rs.getString("name");
                 System.out.println(rs.toString());
             }
             conn.close();
@@ -96,11 +95,7 @@ public class ApplicationTest {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        try {
-            assertEquals(rs.getString("name"), null);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        assertEquals(name2, null);
     }
 
     @Test
