@@ -51,7 +51,7 @@ public class ApplicationTest {
     @Test
     public void t2RetrieveCheck() {
         myDriver = "com.mysql.jdbc.Driver";
-        myURL = "jdbc:mysql://127.0.0.1/mydatabase";
+        myURL = "jdbc:mysql://localhost:3306/mydatabase";
         ResultSet rs = null;
         try {
 

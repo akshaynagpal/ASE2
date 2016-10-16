@@ -7,6 +7,8 @@ script:
   - sbt test
 jdk:
   - oraclejdk8
+mysql:
+  - 5.7.15
 services:
   - mysql
 before_script: 
