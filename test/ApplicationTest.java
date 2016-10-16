@@ -59,16 +59,16 @@ public class ApplicationTest {
             Connection conn = DriverManager.getConnection(myURL, "root", "");
             Statement st = conn.createStatement();
             st.executeUpdate("CREATE TABLE  user_table ( "
-                    + "email VARCHAR(50) NOT NULL ,"
+                    + "email VARCHAR(50) PRIMARY ,"
                     + "name VARCHAR (50),"
-                    + "password VARCHAR(12)),"
-                    + "PRIMARY KEY (email)"
+                    + "password VARCHAR(12))"
             );
             st.executeUpdate("INSERT INTO user_table (email, name, password)" +
                     "VALUES (\'ak@gm.com\', \'akshay kumar\',\'W&rY69\')");
             rs = st.executeQuery("SELECT name FROM user_table WHERE email=\'ak@gm.com\'");
-            rs.next();
-            System.out.println(rs.toString());
+            if(rs.next()) {
+                System.out.println(rs.toString());
+            }
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -91,8 +91,9 @@ public class ApplicationTest {
             Statement st = conn.createStatement();
             st.executeUpdate("DELETE FROM user_table WHERE email=\'ak@gm.com\'");
             rs = st.executeQuery("SELECT name FROM user_table WHERE email=\'ak@gm.com\'");
-            rs.next();
-            System.out.println(rs.toString());
+            if(rs.next()) {
+                System.out.println(rs.toString());
+            }
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
