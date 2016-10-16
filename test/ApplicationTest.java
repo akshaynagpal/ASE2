@@ -78,6 +78,8 @@ public class ApplicationTest {
 
     @Test
     public void t3DeleteCheck(){
+        myDriver = "com.mysql.jdbc.Driver";
+        myURL = "jdbc:mysql://localhost/mydatabase";
         ResultSet rs = null;
         try {
             Class.forName(myDriver);
