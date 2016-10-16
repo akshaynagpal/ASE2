@@ -59,9 +59,10 @@ public class ApplicationTest {
             Connection conn = DriverManager.getConnection(myURL, "root", "");
             Statement st = conn.createStatement();
             st.executeUpdate("CREATE TABLE  user_table ( "
-                    + "email VARCHAR(50) PRIMARY,"
+                    + "email VARCHAR(50) NOT NULL ,"
                     + "name VARCHAR (50),"
-                    + "password VARCHAR(12))"
+                    + "password VARCHAR(12)),"
+                    + "PRIMARY KEY (email)"
             );
             st.executeUpdate("INSERT INTO user_table (email, name, password)" +
                     "VALUES (\'ak@gm.com\', \'akshay kumar\',\'W&rY69\')");
