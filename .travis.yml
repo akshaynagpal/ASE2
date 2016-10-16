@@ -9,5 +9,6 @@ jdk:
   - oraclejdk8
 services:
   - mysql
-before_script:
-- mysql -u root -e "CREATE DATABASE users;"
+before_script: 
+  - mysql -u root -e "CREATE DATABASE mydatabase;"
+

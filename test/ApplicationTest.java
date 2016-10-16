@@ -27,26 +27,26 @@ public class ApplicationTest {
     String myDriver;
     String myURL;
 
-
-    Database database;
-    @Before
-    public void setupDatabase(){
-         database = Databases.inMemory(
-                "mydatabase",
-                ImmutableMap.of(
-                        "MODE", "MYSQL"
-                ),
-                ImmutableMap.of(
-                        "logStatements", true
-                )
-        );
-
-    }
-
-    @After
-    public void shutdownDatabase(){
-        database.shutdown();
-    }
+//
+//    Database database;
+//    @Before
+//    public void setupDatabase(){
+//         database = Databases.inMemory(
+//                "mydatabase",
+//                ImmutableMap.of(
+//                        "MODE", "MYSQL"
+//                ),
+//                ImmutableMap.of(
+//                        "logStatements", true
+//                )
+//        );
+//
+//    }
+//
+//    @After
+//    public void shutdownDatabase(){
+//        database.shutdown();
+//    }
 
     @Test
     public void t2RetrieveCheck() {
