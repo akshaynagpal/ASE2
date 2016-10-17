@@ -27,28 +27,7 @@ public class ApplicationTest {
     String myDriver;
     String myURL;
     String name1,name2;
-
-//
-//    Database database;
-//    @Before
-//    public void setupDatabase(){
-//         database = Databases.inMemory(
-//                "mydatabase",
-//                ImmutableMap.of(
-//                        "MODE", "MYSQL"
-//                ),
-//                ImmutableMap.of(
-//                        "logStatements", true
-//                )
-//        );
-//
-//    }
-//
-//    @After
-//    public void shutdownDatabase(){
-//        database.shutdown();
-//    }
-
+    
     @Test
     public void t2RetrieveCheck() {
         myDriver = "com.mysql.jdbc.Driver";
